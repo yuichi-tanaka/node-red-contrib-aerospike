@@ -15,6 +15,11 @@
     "name":"tanaka.y.p",
     "email": "tanaka.y.p@gmail.com"
   },
+  "node-red": {
+    "nodes": {
+      "aerospike": "aerospike/aerospike.js"
+    }
+  },
   "license": "Apache-2.0",
   "dependencies": {
     "aerospike": "^2.1.1"
