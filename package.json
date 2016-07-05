@@ -1,0 +1,22 @@
+{
+  "name": "node-red-contrib-aerospike",
+  "version": "0.0.1",
+  "description": "A node-red node for connectiong to Aerospike",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "node-red",
+    "nodered",
+    "nodered aerospike",
+    "aerospike"
+  ],
+  "author": {
+    "name":"tanaka.y.p",
+    "email": "tanaka.y.p@gmail.com"
+  },
+  "license": "Apache-2.0",
+  "dependencies": {
+    "aerospike": "^2.1.1"
+  }
+}

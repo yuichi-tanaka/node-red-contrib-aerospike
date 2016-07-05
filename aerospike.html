@@ -1,0 +1,41 @@
+<script type="text/javascript">
+RED.nodes.registerType('aerospike',{
+  category: 'function',
+  defaults: {
+    servers: {value: "", required: true},
+    namespace: {value: "", require: true},
+    set: {value: "", require: true},
+  },
+  inputs: 1,
+  outputs: 0,
+  label: function(){
+    return this.name || "Aerospike";
+  }
+});
+</script>
+<script type="text/x-red" data-template-name="aerospike">
+<div class="form-row">
+  <label for="node-input-servers"><i class="icon-tag"></i>servers</label>
+  <input type="text" id="node-input-servers" placeholder="servers">
+</div>
+
+<div class="form-row">
+  <label for="node-input-namespace"><i class="icon-tag"></i>servers</label>
+  <input type="text" id="node-input-namespace" placeholder="namespace">
+</div>
+
+<div class="form-row">
+  <label for="node-input-set"><i class="icon-tag"></i>servers</label>
+  <input type="text" id="node-input-set" placeholder="set">
+</div>
+</script>
+<script type="text/x-red" data-help-name="aerospike">
+  <p>A simple <a href="http://www.aerospike.jp/">Aerospie</a> output node.</p>
+  <p>Can put(insert/update) objects from a chosen namespace and set.</p>
+  <p>put will update an existing object or insert a new object if one does not already exist.</p>
+  <p><b>servers</b> <i>The node of Aerospike cluster</i></p>
+  <p><b>namespace</b> <i>The Namespace of save of aerospike</i></p>
+  <p><b>set </b> <i>The Set of save of aerospike</i></p>
+</script>
+
+
