@@ -9,7 +9,7 @@ RED.nodes.registerType('aerospike',{
   inputs: 1,
   outputs: 0,
   label: function(){
-    return this.name || "Aerospike";
+    return this.name || "aerospike";
   }
 });
 </script>
@@ -20,12 +20,12 @@ RED.nodes.registerType('aerospike',{
 </div>
 
 <div class="form-row">
-  <label for="node-input-namespace"><i class="icon-tag"></i>servers</label>
+  <label for="node-input-namespace"><i class="icon-tag"></i>namespace</label>
   <input type="text" id="node-input-namespace" placeholder="namespace">
 </div>
 
 <div class="form-row">
-  <label for="node-input-set"><i class="icon-tag"></i>servers</label>
+  <label for="node-input-set"><i class="icon-tag"></i>set</label>
   <input type="text" id="node-input-set" placeholder="set">
 </div>
 </script>
