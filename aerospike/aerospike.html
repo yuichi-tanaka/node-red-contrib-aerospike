@@ -1,6 +1,6 @@
 <script type="text/javascript">
 RED.nodes.registerType('aerospike',{
-  category: 'function',
+  category: 'output',
   defaults: {
     servers: {value: "", required: true},
     namespace: {value: "", require: true},
@@ -8,6 +8,9 @@ RED.nodes.registerType('aerospike',{
   },
   inputs: 1,
   outputs: 0,
+  align: "right",
+  color: "#E9967A",
+  icon: "db.png",
   label: function(){
     return this.name || "aerospike";
   }
