@@ -20,6 +20,10 @@
       "aerospike": "aerospike/aerospike.js"
     }
   },
+  "repository":{
+    "type": "git",
+    "url": "https://github.com/yuichi-tanaka/node-red-contrib-aerospike.git"
+  },
   "license": "Apache-2.0",
   "dependencies": {
     "aerospike": "^2.1.1"
