@@ -53,6 +53,7 @@ module.exports = function(RED){
           console.log(e);
       node.error(e);
     }
+
     /**
      * connect to Aerospike
      */
@@ -62,4 +63,65 @@ module.exports = function(RED){
     });
   };
   RED.nodes.registerType("aerospike",writeToAerospike);
+  /**
+   * read from Aerospike
+   */
+  function readFromAerospike(config){
+    RED.nodes.createNode(this,config);
+
+    var node = this;
+    var as = require('aerospike');
+    var asConf = {
+      hosts: config.servers
+    }
+    var namespace = config.namespace;
+    var set = config.set;
+    try{
+      this.on("input",function(msg){
+        var query = c.query(namespace,set);
+        if(msg.select && msg.select !== ""){
+          //check the select
+          query.select(msg.select);
+        }
+        if(msg.range && msg.range !== ""){
+          var range = msg.range;
+          var key = range.key;
+          var start = range.start;
+          var end = range.end;
+          query.where(Aerospike.filter.range(key, start, end))
+        }
+        if(msg.equal && msg.equal !== ""){
+          var equal = msg.equal;
+          query.where(Aerospike.filter.equal(equal.key, equal.value))
+        }
+        if(msg.contains && msg.contains !== ""){
+          query.where(Aerospike.filter.contains(msg.contains))
+        }
+        var stream = query.foreach();
+        var result = [];
+        stream.on('error',function(e){
+          console.error(e);
+          throw e;
+        }).on('data',function(rec){
+          result.push(rec);
+        }).on('end',function(){
+          var msg = {payload: result};
+          console.log('done');
+          node.send(msg);
+        });
+      });
+    } catch(e) {
+      console.log(e);
+      node.error(e);
+    }
+
+    /**
+     * connect to Aerospike
+     */
+    as.connect(asConf,function(error,connection){
+      if (error) node.error(error);
+      c = connection;
+    });
+  }
+  RED.nodes.registerType("aerospikeIn",readFromAerospike);
 };

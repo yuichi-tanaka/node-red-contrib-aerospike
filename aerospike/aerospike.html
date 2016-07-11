@@ -42,3 +42,41 @@ RED.nodes.registerType('aerospike',{
   <p>a msg.key value is used as the insert Key.</p>
   <p>a msg.payload must to be JSON object.</p>
 </script>
+<script type="text/javascript">
+RED.nodes.registerType('aerospikeIn',{
+  category: 'input',
+  defaults: {
+    servers: {value: "", required: true},
+    namespace: {value: "", require: true},
+    set: {value: "", require: true},
+    select: {value: "", require: false},
+  },
+  inputs: 1,
+  outputs: 1,
+  color: "#E9967A",
+  icon: "db.png",
+  label: function(){
+    return this.name || "aerospikeIn";
+  }
+});
+</script>
+<script type="text/x-red" data-template-name="aerospikeIn">
+<div class="form-row">
+  <label for="node-input-servers"><i class="icon-tag"></i>servers</label>
+  <input type="text" id="node-input-servers" placeholder="servers">
+</div>
+
+<div class="form-row">
+  <label for="node-input-namespace"><i class="icon-tag"></i>namespace</label>
+  <input type="text" id="node-input-namespace" placeholder="namespace">
+</div>
+
+<div class="form-row">
+  <label for="node-input-set"><i class="icon-tag"></i>set</label>
+  <input type="text" id="node-input-set" placeholder="set">
+</div>
+<div class="form-row">
+  <label for="node-input-select"><i class="icon-tag"></i>select</label>
+  <input type="text" id="node-input-select" placeholder="select">
+</div>
+</script>
