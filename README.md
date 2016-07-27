@@ -13,7 +13,7 @@ npm install node-red-contrib-aerospike --save
 [Aerospike](http://www.aerospike.com/)
 
 ##Usage
-[image1](/images/image1.png)
+![image1](/images/image1.png)
 
 ###Parameters
 
@@ -21,7 +21,7 @@ npm install node-red-contrib-aerospike --save
 * namespace: The namespace of Aerospike.
 * set: The set of namespace
 
-[image2](/images/image2.png)
+![image2](/images/image2.png)
 
 ###Parameters
 * servers: the server of Aerospike cluster.
