@@ -43,24 +43,23 @@ RED.nodes.registerType('aerospike',{
   <p>a msg.payload must to be JSON object.</p>
 </script>
 <script type="text/javascript">
-RED.nodes.registerType('aerospikeIn',{
-  category: 'function',
+RED.nodes.registerType('fromAerospikeByKey',{
+  category: 'input',
   defaults: {
     servers: {value: "", required: true},
     namespace: {value: "", require: true},
     set: {value: "", require: true},
-    select: {value: "", require: false},
   },
   inputs: 1,
   outputs: 1,
   color: "#E9967A",
   icon: "db.png",
   label: function(){
-    return this.name || "aerospikeIn";
+    return this.name || "fromAerospikeByKey";
   }
 });
 </script>
-<script type="text/x-red" data-template-name="aerospikeIn">
+<script type="text/x-red" data-template-name="fromAerospikeByKey">
 <div class="form-row">
   <label for="node-input-servers"><i class="icon-tag"></i>servers</label>
   <input type="text" id="node-input-servers" placeholder="servers">
@@ -75,8 +74,13 @@ RED.nodes.registerType('aerospikeIn',{
   <label for="node-input-set"><i class="icon-tag"></i>set</label>
   <input type="text" id="node-input-set" placeholder="set">
 </div>
-<div class="form-row">
-  <label for="node-input-select"><i class="icon-tag"></i>select</label>
-  <input type="text" id="node-input-select" placeholder="select">
-</div>
+</script>
+<script type="text/x-red" data-help-name="fromAerospikeByKey">
+  <p>A simple <a href="http://www.aerospike.jp/">Aerospie</a> get node.</p>
+  <p>Can select objects from a chosen namespace, set and specified msg.key.</p>
+  <p><b>servers</b> <i>The node of Aerospike cluster</i></p>
+  <p><b>namespace</b> <i>The Namespace of get of aerospike</i></p>
+  <p><b>set </b> <i>The Set of get of aerospike</i></p>
+  <p>a msg.key value is used as the get Key.</p>
+  <p>It returns the results of msg.payload and msg.meta</p>
 </script>

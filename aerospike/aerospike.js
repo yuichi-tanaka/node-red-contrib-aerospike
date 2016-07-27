@@ -64,6 +64,51 @@ module.exports = function(RED){
   };
   RED.nodes.registerType("aerospike",writeToAerospike);
   /**
+   * read from Aerospike By key
+   */
+  function readFromAerospikeByKey(config){
+    RED.nodes.createNode(this,config);
+
+    var node = this;
+    var as = require('aerospike');
+    var Key = as.Key;
+    var asConf = {
+      hosts: config.servers
+    }
+    var namespace = config.namespace;
+    var set = config.set;
+    try{
+      this.on('input',function(msg){
+        //create Key
+        console.log(msg.key);
+        var key = new Key(namespace,set,msg.key);
+        c.get(key,function(er,rec,meta){
+          if(er && er.code === 2){
+            //recode not found
+            console.log('recode not found: key = ',msg.key);
+          }else if(er){
+            console.error('aerospike error: code = ',er.code,', key = ',msg.key);
+            node.error(er);
+          }
+          var r = { payload: rec, meta: meta};
+          node.send(r);
+        });
+      });
+    } catch(e) {
+      console.log(e);
+      node.error(e);
+    }
+    /**
+     * connect to Aerospike
+     */
+    as.connect(asConf,function(error,connection){
+      if (error) node.error(error);
+      c = connection;
+    });
+
+  };
+  RED.nodes.registerType("fromAerospikeByKey",readFromAerospikeByKey);
+  /**
    * read from Aerospike
    */
   function readFromAerospike(config){
@@ -76,14 +121,21 @@ module.exports = function(RED){
     }
     var namespace = config.namespace;
     var set = config.set;
+    var select = config.select;
     try{
       this.on("input",function(msg){
         var query = c.query(namespace,set);
-        if(msg.select && msg.select !== ""){
+        if(select && select !== ""){
+          if(select.indexOf(",") > 0){
+            //split select fields
+            var _select = select;
+            select = _select.split(",");
+          }
           //check the select
-          query.select(msg.select);
+          query.select(select);
         }
         if(msg.range && msg.range !== ""){
+          console.log(msg.range);
           var range = msg.range;
           var key = range.key;
           var start = range.start;
@@ -97,18 +149,28 @@ module.exports = function(RED){
         if(msg.contains && msg.contains !== ""){
           query.where(Aerospike.filter.contains(msg.contains))
         }
+        try{
         var stream = query.foreach();
         var result = [];
         stream.on('error',function(e){
-          console.error(e);
-          throw e;
+          if(e && e.code === 2){
+            console.log('recode not found');
+          } else {
+            console.error(e);
+            throw e;
+          }
         }).on('data',function(rec){
+          console.log(rec);
           result.push(rec);
         }).on('end',function(){
-          var msg = {payload: result};
+          var r = {payload: result};
           console.log('done');
-          node.send(msg);
+          node.send(r);
         });
+        }catch(e){
+          console.error(e);
+          node.error(e);
+        }
       });
     } catch(e) {
       console.log(e);
@@ -123,5 +185,5 @@ module.exports = function(RED){
       c = connection;
     });
   }
-  RED.nodes.registerType("aerospikeIn",readFromAerospike);
+  RED.nodes.registerType("fromAerospike",readFromAerospike);
 };
