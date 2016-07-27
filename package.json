@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-aerospike",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A node-red node for connectiong to Aerospike",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
